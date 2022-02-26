@@ -72,7 +72,9 @@ def inference():
 
         if prev_result != 4 or prev_result != 5:
             if prev_result != results[0].id:
-                image = cv2.imencode(".jpg", frame)
+                ret, image = cv2.imencode(".jpg", frame)
+                if not ret:
+                    continue
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
                 cv2.imwrite(file_name, image)
 
