@@ -8,9 +8,9 @@ db = client["database"]
 collection = db.collection
 
 
-def add_object(file_name, classification, x_coordinate, y_coordinate, date, epoch):
+def add_object(image, classification, x_coordinate, y_coordinate, date, epoch):
     post = {
-        "file_name": file_name,
+        "image": image,
         "classification": classification,
         "x_coordinate": x_coordinate,
         "y_coordinate": y_coordinate,
@@ -26,5 +26,5 @@ def get_objects_by_date(date):
     posts = []
     for post in db.collection.find(field):
         posts.append(post)
-    
+
     return posts
