@@ -153,19 +153,6 @@ def get_data():
     return json.dumps({"type": "FeatureCollection", "features": features})
 
 
-@app.route("/api/v1/add_object", methods=["POST"])
-def add_object():
-    classification = request.args.get("classification")
-    x_coordinate = request.args.get("x")
-    y_coordinate = request.args.get("y")
-    date = request.args.get("date")
-    image = request.args.get("image")
-
-    db.add_object(classification, x_coordinate, y_coordinate, date, image)
-
-    return "OK"
-
-
 t = threading.Thread(target=inference)
 t.start()
 
