@@ -18,7 +18,7 @@ import time
 import threading
 import uuid
 
-app = Flask(__name__, static_url_path="/images")
+app = Flask(__name__, static_url_path="/images", static_folder="images")
 CORS(app)
 
 current_frame = None
@@ -69,7 +69,7 @@ def inference():
             text_lines.append("score={:.2f}: {}".format(result.score, labels[result.id]))
             print(" ".join(text_lines))
 
-        if prev_result != 4 and prev_result != 5:
+        if results[0].id != 4 and results[0].id != 5:
             if prev_result != results[0].id:
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
                 cv2.imwrite(file_name, frame)
