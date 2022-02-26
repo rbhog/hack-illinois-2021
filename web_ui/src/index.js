@@ -24,3 +24,14 @@ var map = new mapboxgl.Map({
 console.log("map created")
 
 
+/*
+ * [
+      'match',
+      ['get', 'DATA_TYPE'], // Use the result 'DATA_TYPE' property
+      'Disease',
+      '##FF0000',
+      'Weed',
+      '#9ACD32',
+      '#0000FF' // any other store type
+    ]
+*/
