@@ -12,6 +12,7 @@
     "dotenv": "^16.0.0",
     "js-datepicker": "^5.18.0",
     "parcel": "1.12.3",
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "rollup": "^2.68.0"
   }
 }
