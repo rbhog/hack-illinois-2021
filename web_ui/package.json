@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "parcel src/*.html",
-    "dev": "parcel watch src/*.html"
+    "start": "parcel src/index.html",
+    "dev": "parcel watch src/index.html"
   },
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.26.0",
     "dotenv": "^16.0.0",
-    "parcel": "^1.12.4"
+    "js-datepicker": "^5.18.0",
+    "parcel": "1.12.3",
+    "parcel-bundler": "^1.12.5"
   }
 }
