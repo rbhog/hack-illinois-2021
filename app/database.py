@@ -8,13 +8,14 @@ db = client["database"]
 collection = db.collection
 
 
-def add_object(classification, x_coordinate, y_coordinate, date, file_name):
+def add_object(file_name, classification, x_coordinate, y_coordinate, date, epoch):
     post = {
+        "file_name": file_name,
         "classification": classification,
         "x_coordinate": x_coordinate,
         "y_coordinate": y_coordinate,
         "date": date,
-        "file_name": file_name,
+        "epoch": epoch
     }
 
     db.collection.insert_one(post)

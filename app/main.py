@@ -69,13 +69,14 @@ def inference():
             text_lines.append("score={:.2f}: {}".format(result.score, labels[result.id]))
             print(" ".join(text_lines))
 
-        if prev_result != 4 and prev_result != 5 and prev_result is not None:
+        if prev_result != 4 and prev_result != 5:
             if prev_result != results[0].id:
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
                 cv2.imwrite(file_name, frame)
 
-                timestamp = datetime.now().timestamp()
-                db.add_object(labels[results[0].id], x, y, timestamp, file_name)
+                epoch = datetime.now().timestamp()
+                day = datetime.now().strftime("%Y%m%d")
+                db.add_object(file_name, labels[results[0].id], x, y, day, epoch)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
@@ -97,6 +98,8 @@ def inference():
 
         with lock:
             current_frame = cv2_im
+
+        prev_result = results[0].id
 
     cap.release()
 
