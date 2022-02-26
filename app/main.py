@@ -1,7 +1,6 @@
-from cProfile import label
+from pkg_resources import UnknownExtra
 from flask import Flask, Response, request
 from flask_cors import CORS
-
 
 from pycoral.adapters.common import input_size
 from pycoral.adapters import common
@@ -37,7 +36,7 @@ def inference():
 
     cap = cv2.VideoCapture(-1)
 
-    y = random.uniform(40.2151558052675, 40.2151558052675)
+    y = random.uniform(40.20073530692846, 40.2151558052675)
     x = -88.12527531155014
 
     prev_result = None
@@ -63,17 +62,14 @@ def inference():
             "Inference: {:.2f} ms".format((end_time - start_time) * 1000),
         ]
 
-        curr_score = result[0].score
-        
         for result in results:
-            if result.score > 0.5 and prev_result != result.label:
-                prev_result = result.id
+            text_lines.append("score={:.2f}: {}".format(result.score, labels[result.id]))
 
-        text_lines.append("score={:.2f}: {}".format(curr_score, labels[result.id]))
+        if prev_result is not None and prev_result != results[0].id:
+            prev_result = results[0].id
     
-        if curr_score > 0.5:
-            # save image to database
-            db.add_object(result.id, x, y, result.date)
+        if prev_result != 4 or prev_result != 5:
+            db.add_object(labels[prev_result], x, y, result.date)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
