@@ -18,7 +18,7 @@ import time
 import threading
 import uuid
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/images")
 CORS(app)
 
 current_frame = None
