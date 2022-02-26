@@ -70,7 +70,7 @@ def inference():
         if prev_result is not None and prev_result != results[0].id:
             prev_result = results[0].id
 
-        if prev_result != 4 or prev_result != 5:
+        if prev_result != 4 and prev_result != 5:
             if prev_result != results[0].id:
                 ret, image = cv2.imencode(".jpg", frame)
                 if not ret:
