@@ -69,15 +69,15 @@ def inference():
 
         if prev_result is not None and prev_result != results[0].id:
             prev_result = results[0].id
-    
+
         if prev_result != 4 or prev_result != 5:
             if prev_result != results[0].id:
                 image = cv2.imencode(".jpg", frame)
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
-                cv2.imwrite(file_name, image) 
+                cv2.imwrite(file_name, image)
 
-                time = datetime.now().timestamp()
-                db.add_object(labels[prev_result], x, y, time, file_name)
+                timestamp = datetime.now().timestamp()
+                db.add_object(labels[prev_result], x, y, timestamp, file_name)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
@@ -157,7 +157,7 @@ def add_object():
     y_coordinate = request.args.get("y")
     date = request.args.get("date")
     image = request.args.get("image")
-    
+
     db.add_object(classification, x_coordinate, y_coordinate, date, image)
 
     return "OK"
