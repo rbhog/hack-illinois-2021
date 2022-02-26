@@ -9,6 +9,7 @@ from pycoral.utils.edgetpu import make_interpreter
 from pycoral.adapters import classify
 
 import random
+from datetime import datetime
 
 import database as db
 import cv2
@@ -70,13 +71,13 @@ def inference():
             prev_result = results[0].id
     
         if prev_result != 4 or prev_result != 5:
-            ##write encode frame to jpg and write to file
-            image = cv2.imencode(".jpg", frame)
-            file_name = "images/" + str(uuid.uuid4()) + ".jpg"
-            cv2.imwrite(file_name, image) 
+            if prev_result != results[0].id:
+                image = cv2.imencode(".jpg", frame)
+                file_name = "images/" + str(uuid.uuid4()) + ".jpg"
+                cv2.imwrite(file_name, image) 
 
-
-            db.add_object(labels[prev_result], x, y, result.date, file_name)
+                time = datetime.now().timestamp()
+                db.add_object(labels[prev_result], x, y, time, file_name)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:

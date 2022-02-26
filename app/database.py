@@ -3,17 +3,18 @@ import os
 
 ip = os.getenv("MONGO_IP", "127.0.0.1")
 
-client = pymongo.MongoClient(ip, 27888)
+client = pymongo.MongoClient(ip, 27017)
 db = client["database"]
 collection = db.collection
 
 
-def add_object(classification, x_coordinate, y_coordinate, date):
+def add_object(classification, x_coordinate, y_coordinate, date, file_name):
     post = {
         "classification": classification,
         "x_coordinate": x_coordinate,
         "y_coordinate": y_coordinate,
-        "date": date
+        "date": date,
+        "file_name": file_name,
     }
 
     db.collection.insert_one(post)
