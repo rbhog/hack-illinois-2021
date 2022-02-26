@@ -15,6 +15,7 @@ import cv2
 import json
 import time
 import threading
+import uuid
 
 app = Flask(__name__)
 CORS(app)
@@ -69,7 +70,13 @@ def inference():
             prev_result = results[0].id
     
         if prev_result != 4 or prev_result != 5:
-            db.add_object(labels[prev_result], x, y, result.date)
+            ##write encode frame to jpg and write to file
+            image = cv2.imencode(".jpg", frame)
+            file_name = "images/" + str(uuid.uuid4()) + ".jpg"
+            cv2.imwrite(file_name, image) 
+
+
+            db.add_object(labels[prev_result], x, y, result.date, file_name)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
@@ -134,6 +141,7 @@ def get_data():
                 "properties": {
                     "classification": obj["classification"],
                     "date": obj["date"],
+                    "image": obj["image"],
                 },
             }
         )
@@ -147,8 +155,9 @@ def add_object():
     x_coordinate = request.args.get("x")
     y_coordinate = request.args.get("y")
     date = request.args.get("date")
-
-    db.add_object(classification, x_coordinate, y_coordinate, date)
+    image = request.args.get("image")
+    
+    db.add_object(classification, x_coordinate, y_coordinate, date, image)
 
     return "OK"
 
