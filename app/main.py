@@ -42,6 +42,7 @@ def inference():
     x = -88.12527531155014
 
     prev_result = None
+
     while cap.isOpened():
         x = random.uniform(x - 0.001, x + 0.001)
         ret, frame = cap.read()
@@ -66,20 +67,15 @@ def inference():
 
         for result in results:
             text_lines.append("score={:.2f}: {}".format(result.score, labels[result.id]))
+            print(" ".join(text_lines))
 
-        if prev_result is not None and prev_result != results[0].id:
-            prev_result = results[0].id
-
-        if prev_result != 4 and prev_result != 5:
+        if prev_result != 4 and prev_result != 5 and prev_result is not None:
             if prev_result != results[0].id:
-                ret, image = cv2.imencode(".jpg", frame)
-                if not ret:
-                    continue
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
-                cv2.imwrite(file_name, image)
+                cv2.imwrite(file_name, frame)
 
                 timestamp = datetime.now().timestamp()
-                db.add_object(labels[prev_result], x, y, timestamp, file_name)
+                db.add_object(labels[results[0].id], x, y, timestamp, file_name)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
