@@ -97,6 +97,8 @@ def inference():
                 2,
             )
 
+        prev_result = results[0].id
+
         with lock:
             current_frame = cv2_im
 
