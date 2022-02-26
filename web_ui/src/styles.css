@@ -29,7 +29,7 @@ body {
   border-radius: 3px;
   padding: 10px 20px;
   position: fixed;
-  bottom: 5%;
+  bottom: 2%;
 }
 
 input {
@@ -39,4 +39,43 @@ input {
 
 p {
   margin: 1px;
+}
+
+/* .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #FF0000;
+  cursor: pointer;
+} */
+
+#slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #5f5f5f;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: rgba(226,56,34, 0.8);
+  cursor: pointer;
+}
+
+#slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: rgba(226,56,34, 0.8);
+  cursor: pointer;
 }

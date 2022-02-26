@@ -62,7 +62,7 @@ map.on("load", async () => {
   const updateSource = setInterval(async () => {
     const geojson = await getData(updateSource);
     map.getSource("crops").setData(geojson);
-  }, 2000);
+  }, 1000);
 
   async function getData(updateSource) {
     // Make a GET request to the API and return the location of the ISS.
