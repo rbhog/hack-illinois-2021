@@ -11,25 +11,32 @@ body {
   margin: 0
 }
 
+#container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: bottom;
+  min-width: 600px;
+  padding: 10px 20px;
+}
+
 #navbar {
-  z-index: 999;
-  position: absolute;
-  padding: 10px;
-  margin-left: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  top: 0;
+  min-width: 600px;
   background-color: #E38B4FCC;
-  color: rgb(255, 255, 255);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
-  border-radius: 3px;
   font-family: 'Open Sans', sans-serif;
+  border-radius: 3px;
+  padding: 10px 20px;
+  position: fixed;
+  bottom: 5%;
 }
 
 input {
-  font-family: 'Open Sans', sans-serif;
-  border-radius: 3px;
   border: none;
-  width: 105px;
+  min-width: 600px;
+}
+
+p {
+  margin: 1px;
 }

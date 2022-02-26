@@ -7,6 +7,14 @@ let today = new Date();
 wantedDate.setDate(wantedDate.getDate()-5)
 let baseURL = "http://127.0.0.1:5000/";
 
+document.getElementById("day").innerHTML = `Date: ${
+  (wantedDate.getMonth() +1) +
+  "/" +
+  wantedDate.getDate() +
+  "/" +
+  wantedDate.getFullYear()
+}`;
+
 // const picker = datepicker("#simple", {
 //   onSelect: (instance, date) => {
 //     wantedDate = date;
@@ -22,7 +30,7 @@ mapboxgl.accessToken =
 
 var map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/streets-v11",
+  style: "mapbox://styles/mapbox/dark-v10",
   center: [-88.2249588460582, 40.113983290286015],
   zoom: 17,
 });
@@ -77,6 +85,13 @@ map.on("load", async () => {
   document.getElementById("slider").addEventListener("input", (e) => {
     const dayOffset = parseInt(e.target.value, 10);
     wantedDate.setDate(today.getDate() + dayOffset-11);
+    document.getElementById("day").innerHTML = `Date: ${
+      (wantedDate.getMonth() + 1) +
+      "/" +
+      wantedDate.getDate() +
+      "/" +
+      wantedDate.getFullYear()
+    }`;
   });
 
   
