@@ -1,3 +1,4 @@
+from cProfile import label
 from flask import Flask, Response, request
 from flask_cors import CORS
 
@@ -7,6 +8,8 @@ from pycoral.adapters import common
 from pycoral.utils.dataset import read_label_file
 from pycoral.utils.edgetpu import make_interpreter
 from pycoral.adapters import classify
+
+import random
 
 import database as db
 import cv2
@@ -34,7 +37,12 @@ def inference():
 
     cap = cv2.VideoCapture(-1)
 
+    y = random.uniform(40.2151558052675, 40.2151558052675)
+    x = -88.12527531155014
+
+    prev_result = None
     while cap.isOpened():
+        x = random.uniform(x - 0.001, x + 0.001)
         ret, frame = cap.read()
         if not ret:
             break
@@ -55,11 +63,17 @@ def inference():
             "Inference: {:.2f} ms".format((end_time - start_time) * 1000),
         ]
 
+        curr_score = result[0].score
+        
         for result in results:
-            text_lines.append(
-                "score={:.2f}: {}".format(result.score, labels[result.id])
-            )
-            print(" ".join(text_lines))
+            if result.score > 0.5 and prev_result != result.label:
+                prev_result = result.id
+
+        text_lines.append("score={:.2f}: {}".format(curr_score, labels[result.id]))
+    
+        if curr_score > 0.5:
+            # save image to database
+            db.add_object(result.id, x, y, result.date)
 
         for idx, val in enumerate(text_lines, start=1):
             if idx == 1:
