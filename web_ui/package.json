@@ -1,0 +1,14 @@
+{
+  "name": "web_ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/*.html",
+    "dev": "parcel watch src/*.html"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "parcel": "^1.12.4"
+  }
+}
