@@ -923,7 +923,7 @@ map.on("load", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.m
                     case 0:
                       _context2.prev = 0;
                       _context2.next = 3;
-                      return fetch("".concat(newURL, "api/v1/get_data?date=").concat(wantedDate.toISOString().split("T")[0].replace("-", "").replace("-", "")), {
+                      return fetch("/api/v1/get_data?date=".concat(wantedDate.toISOString().split("T")[0].replace("-", "").replace("-", "")), {
                         method: "GET"
                       });
 
@@ -1003,7 +1003,7 @@ map.on("load", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.m
           map.on("click", "crops", function (e) {
             new mapboxgl.Popup({
               maxWidth: "none"
-            }).setLngLat(e.lngLat).setHTML("<img src=".concat(newURL).concat(e.features[0].properties.image, " width=\"300\" height=\"200\"><br><p>").concat(e.features[0].properties.classification, "</p>")).addTo(map);
+            }).setLngLat(e.lngLat).setHTML("<img src=".concat(e.features[0].properties.image, " width=\"300\" height=\"200\"><br><p>").concat(e.features[0].properties.classification, "</p>")).addTo(map);
           });
 
         case 12:
@@ -1025,7 +1025,7 @@ map.on("load", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.m
       '#0000FF' // any other store type
     ]
 */
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1053,7 +1053,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55416" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -1229,5 +1229,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/src.e31bb0bc.js.map
