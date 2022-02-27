@@ -48,6 +48,11 @@ def inference():
 
     cap = cv2.VideoCapture(-1)
 
+    epd = epd2in13_V2.EPD()
+    epd.init(epd.FULL_UPDATE)
+    epd.Clear(0xFF)
+    epd.init(epd.PART_UPDATE)
+
     while True:
         x = random.uniform(x - 0.001, x + 0.001)
         ret, frame = cap.read()
@@ -80,16 +85,16 @@ def inference():
             )
             print(" ".join(text_lines))
 
+        image = Image.new("1", (epd.height, epd.width), 255)
+        draw = ImageDraw.Draw(image)
+        draw.text((10, 30), labels[results[0].id], font=font24, fill=0)
+        draw.text((10, 60), str(round(results[0].score, 2)), font=font24, fill=0)
+        epd.displayPartial(epd.getbuffer(image))
+
         if results[0].id != 4 and results[0].id != 5:
             if prev_result != results[0].id:
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
                 cv2.imwrite(file_name, frame)
-
-                image = Image.new("1", (epd.height, epd.width), 255)
-                draw = ImageDraw.Draw(image)
-                w, h = draw.textsize(labels[results[0].id])
-                draw.text((20, 50), labels[results[0].id], font=font24, fill=0)
-                epd.display(epd.getbuffer(image))
 
                 epoch = datetime.now().timestamp()
                 day = datetime.now().strftime("%Y%m%d")
@@ -172,10 +177,6 @@ def get_data():
 
 t = threading.Thread(target=inference)
 t.start()
-
-epd = epd2in13_V2.EPD()
-epd.init(epd.FULL_UPDATE)
-epd.Clear(0xFF)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8000)
