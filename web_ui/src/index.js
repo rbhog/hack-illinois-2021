@@ -54,7 +54,19 @@ map.on("load", async () => {
     type: "circle",
     source: "crops",
     paint: {
-      "circle-color": "#00ff00",
+      "circle-color": [
+        "match",
+        ["get", "classification"],
+        "Mosaic Disease",
+        "#785C9C",
+        "Bacterial Blight",
+        "#5C839C",
+        "Green Mite",
+        "#00FF00",
+        "Brown Streak Disease",
+        "#915A17",
+        "#000000",
+      ],
       "circle-radius": 8,
     },
   });
@@ -120,5 +132,19 @@ map.on("load", async () => {
       'Weed',
       '#9ACD32',
       '#0000FF' // any other store type
+    ]
+
+    [
+        'match',
+        ['get', 'classification'],
+        'Mosaic Disease',
+        '#785C9C',
+        'Bacterial Blight',
+        '#5C839C',
+        'Green Mite',
+        '#00FF00',
+        'Brown Streak Disease',
+        '#915A17',
+        '#000000'
     ]
 */
