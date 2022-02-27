@@ -68,7 +68,7 @@ map.on("load", async () => {
     // Make a GET request to the API and return the location of the ISS.
     try {
       const response = await fetch(
-        `${newURL}api/v1/get_data?date=${wantedDate
+        `/api/v1/get_data?date=${wantedDate
           .toISOString()
           .split("T")[0]
           .replace("-", "")
@@ -105,7 +105,7 @@ map.on("load", async () => {
       new mapboxgl.Popup({maxWidth: "none"})
         .setLngLat(e.lngLat)
         .setHTML(
-          `<img src=${newURL}${e.features[0].properties.image} width="300" height="200"><br><p>${e.features[0].properties.classification}</p>`
+          `<img src=${e.features[0].properties.image} width="300" height="200"><br><p>${e.features[0].properties.classification}</p>`
         )
         .addTo(map);
   });
