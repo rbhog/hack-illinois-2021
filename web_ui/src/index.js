@@ -74,6 +74,15 @@ map.on("load", async () => {
   const updateSource = setInterval(async () => {
     const geojson = await getData(updateSource);
     map.getSource("crops").setData(geojson);
+    const bounds = new mapboxgl.LngLatBounds(
+      geojson.features[0].geometry.coordinates,
+      geojson.features[0].geometry.coordinates
+    );
+
+    geojson.features.forEach(feature => {
+        bounds.extend(feature.geometry.coordinates);
+    })
+    map.fitBounds(bounds, { padding: 50 });
   }, 1000);
 
   async function getData(updateSource) {
