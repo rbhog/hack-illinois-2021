@@ -121,8 +121,6 @@ def inference():
         with lock:
             current_frame = cv2_im
 
-        prev_result = results[0].id
-
     cap.release()
 
 
