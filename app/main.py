@@ -1,12 +1,15 @@
-from pkg_resources import UnknownExtra
 from flask import Flask, Response, request
 from flask_cors import CORS
+
+from PIL import Image, ImageDraw, ImageFont
 
 from pycoral.adapters.common import input_size
 from pycoral.adapters import common
 from pycoral.utils.dataset import read_label_file
 from pycoral.utils.edgetpu import make_interpreter
 from pycoral.adapters import classify
+
+from waveshare_epd import epd2in13_V2
 
 import random
 from datetime import datetime
@@ -43,6 +46,8 @@ def inference():
 
     prev_result = None
 
+    font24 = ImageFont.truetype("./Font.ttc", 24)
+
     while cap.isOpened():
         x = random.uniform(x - 0.001, x + 0.001)
         ret, frame = cap.read()
@@ -66,13 +71,21 @@ def inference():
         ]
 
         for result in results:
-            text_lines.append("score={:.2f}: {}".format(result.score, labels[result.id]))
+            text_lines.append(
+                "score={:.2f}: {}".format(result.score, labels[result.id])
+            )
             print(" ".join(text_lines))
 
         if results[0].id != 4 and results[0].id != 5:
             if prev_result != results[0].id:
                 file_name = "images/" + str(uuid.uuid4()) + ".jpg"
                 cv2.imwrite(file_name, frame)
+
+                image = Image.new("1", (epd.height, epd.width), 255)
+                draw = ImageDraw.Draw(image)
+                w, h = draw.textsize(labels[results[0].id])
+                draw.text((20, 50), labels[results[0].id], font=font24, fill=0)
+                epd.display(epd.getbuffer(image))
 
                 epoch = datetime.now().timestamp()
                 day = datetime.now().strftime("%Y%m%d")
@@ -155,6 +168,10 @@ def get_data():
 
 t = threading.Thread(target=inference)
 t.start()
+
+epd = epd2in13_V2.EPD()
+epd.init(epd.FULL_UPDATE)
+epd.Clear(0xFF)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8000)
