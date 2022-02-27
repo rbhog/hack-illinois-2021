@@ -1,0 +1,6 @@
+0 Mosaic Disease
+1 Bacterial Blight
+2 Green Mite
+3 Brown Streak Disease
+4 Healthy
+5 Unknown
