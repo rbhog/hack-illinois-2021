@@ -4,11 +4,13 @@
 
 let wantedDate = new Date();
 let today = new Date();
-wantedDate.setDate(wantedDate.getDate()-5)
+wantedDate.setDate(wantedDate.getDate() - 5);
 let baseURL = "http://127.0.0.1:5000/";
+let newURL = "http://172.16.99.94:5000/";
 
 document.getElementById("day").innerHTML = `Date: ${
-  (wantedDate.getMonth() +1) +
+  wantedDate.getMonth() +
+  1 +
   "/" +
   wantedDate.getDate() +
   "/" +
@@ -24,7 +26,6 @@ document.getElementById("day").innerHTML = `Date: ${
 // });
 import "regenerator-runtime/runtime";
 
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmJob2ciLCJhIjoiY2wwM2M3bHY0MGhueTNqcm5iN2pna3I2ZiJ9.158d5oilXkISjK476I7uPQ";
 
@@ -37,12 +38,11 @@ var map = new mapboxgl.Map({
 
 console.log("map created");
 
-
 map.on("load", async () => {
-    console.log("map loaded");
+  console.log("map loaded");
   const geojson = await getData();
 
-  console.log(geojson)
+  console.log(geojson);
 
   map.addSource("crops", {
     type: "geojson",
@@ -55,7 +55,7 @@ map.on("load", async () => {
     source: "crops",
     paint: {
       "circle-color": "#00ff00",
-      "circle-radius": 5,
+      "circle-radius": 8,
     },
   });
 
@@ -68,13 +68,19 @@ map.on("load", async () => {
     // Make a GET request to the API and return the location of the ISS.
     try {
       const response = await fetch(
-        `${baseURL}api/v1/get_data?date=${wantedDate.toISOString().split("T")[0].replace("-","").replace("-","")}`,
+        `${newURL}api/v1/get_data?date=${wantedDate
+          .toISOString()
+          .split("T")[0]
+          .replace("-", "")
+          .replace("-", "")}`,
         { method: "GET" }
       );
-      console.log(wantedDate.toISOString().split("T")[0].replace("-", "").replace("-", ""));
-      let res = response.json()
+      console.log(
+        wantedDate.toISOString().split("T")[0].replace("-", "").replace("-", "")
+      );
+      let res = response.json();
       // Return the location of the ISS as GeoJSON.
-      return res
+      return res;
     } catch (err) {
       // If the updateSource interval is defined, clear the interval to stop updating the source.
       if (updateSource) clearInterval(updateSource);
@@ -84,9 +90,10 @@ map.on("load", async () => {
 
   document.getElementById("slider").addEventListener("input", (e) => {
     const dayOffset = parseInt(e.target.value, 10);
-    wantedDate.setDate(today.getDate() + dayOffset-11);
+    wantedDate.setDate(today.getDate() + dayOffset - 11);
     document.getElementById("day").innerHTML = `Date: ${
-      (wantedDate.getMonth() + 1) +
+      wantedDate.getMonth() +
+      1 +
       "/" +
       wantedDate.getDate() +
       "/" +
@@ -94,9 +101,16 @@ map.on("load", async () => {
     }`;
   });
 
-  
+  map.on("click", "crops", (e) => {
+      new mapboxgl.Popup({maxWidth: "none"})
+        .setLngLat(e.lngLat)
+        .setHTML(
+          `<img src=${newURL}${e.features[0].properties.image} width="300" height="200"><br><p>${e.features[0].properties.classification}</p>`
+        )
+        .addTo(map);
+  });
 });
-
+//`<img src=${e.features[0].properties.image} width="500" height="600">`
 /*
  * [
       'match',
