@@ -39,8 +39,6 @@ def inference():
     labels = read_label_file("./cassava_labels.txt")
     size = common.input_size(interpreter)
 
-    cap = cv2.VideoCapture(-1)
-
     y = random.uniform(40.20073530692846, 40.2151558052675)
     x = -88.12527531155014
 
@@ -48,11 +46,17 @@ def inference():
 
     font24 = ImageFont.truetype("./Font.ttc", 24)
 
-    while cap.isOpened():
+    cap = cv2.VideoCapture(-1)
+
+    while True:
         x = random.uniform(x - 0.001, x + 0.001)
         ret, frame = cap.read()
         if not ret:
-            break
+            cap.release()
+            time.sleep(5) # camera disconnected by accident, reconnect
+            cap = cv2.VideoCapture(-1)
+            continue
+
         cv2_im = frame
 
         cv2_im_rgb = cv2.cvtColor(cv2_im, cv2.COLOR_BGR2RGB)
