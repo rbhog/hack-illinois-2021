@@ -1,0 +1,10 @@
+0 Weed
+1 Weed
+2 Weed
+3 Weed
+4 Weed
+5 Weed
+6 Weed
+7 Weed
+8 Not weed
+
